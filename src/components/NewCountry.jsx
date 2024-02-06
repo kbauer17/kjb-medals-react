@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 import { PlusCircleFill } from 'react-bootstrap-icons';
 
 class NewCountry extends Component {
   state = { 
     showModal: false,
     newCountryName: "",
+    showToast: false,
+    setToast: false,
    }
 
    handleModalClose = () => this.setState( {  showModal: false });
@@ -15,6 +19,9 @@ class NewCountry extends Component {
    handleModalKeyPress = (e) => (e.keyCode ? e.keyCode : e.which) === 13 && this.handleAdd();
 
    handleAdd = () => {
+    if(this.state.newCountryName.length <= 0) {
+      this.setState({ showToast: true});
+    };
     this.state.newCountryName.length > 0 && this.props.onAdd(this.state.newCountryName);
     this.handleModalClose();
    }
@@ -62,6 +69,28 @@ class NewCountry extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        <ToastContainer
+          className="p-3"
+          position='top-center'
+          style={{ zIndex: 1 }}
+        >
+        
+        <Toast
+        onClose={()=>this.setState({ showToast: false }) }
+        autohide
+        bg='danger'
+        show={this.state.showToast}
+        delay={2200}
+        >
+          <Toast.Header>
+            <strong className='mr-auto'>Country Name Required</strong>
+          </Toast.Header>
+          <Toast.Body className={'dark' && 'text-white'}>
+            Enter a name to add a country
+          </Toast.Body>
+        </Toast>
+        </ToastContainer>
       </React.Fragment>
     );
   }
