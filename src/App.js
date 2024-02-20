@@ -2,6 +2,7 @@
 // Author:      Jeff Grissom
 // Version:     4.xx
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
 import Container from 'react-bootstrap/Container';
@@ -13,6 +14,7 @@ import './App.css';
 
 const App = () => {
   const [countries, setCountries] = useState([]);
+  const apiEndpoint = "https://medals-api-kjb.azurewebsites.net/api/country";
   const medals = useRef([
     { id: 1, name: 'gold' },
     { id: 2, name: 'silver' },
@@ -21,24 +23,21 @@ const App = () => {
 
   // this is the functional equivalent to componentDidMount
   useEffect(() => {
-    // initial data loaded here
-    let fetchedCountries = [
-      { id: 1, name: 'United States', gold: 2, silver: 2, bronze: 3 },
-      { id: 2, name: 'China', gold: 3, silver: 1, bronze: 0 },
-      { id: 3, name: 'Germany', gold: 0, silver: 2, bronze: 2 },
-    ] 
-    setCountries(fetchedCountries);
-    }, []);
+    async function fetchData() {
+      const { data: fetchedCountries } = await axios.get(apiEndpoint);
+      setCountries(fetchedCountries);
+    }
+    fetchData();
+  }, []);
 
-
-  const handleAdd = (name) => {
-    // const { countries } = this.state;
-    const id = countries.length === 0 ? 1 : Math.max(...countries.map(country => country.id)) + 1;
-    setCountries( [...countries].concat( { id: id, name: name, gold: 0, silver: 0, bronze: 0 }));
+  const handleAdd = async(name) => {
+    const {data: post} = await axios.post(apiEndpoint, {name: name, gold: 0, silver: 0, bronze: 0});
+    setCountries(countries.concat(post));
   }
-  const handleDelete = (countryId) => {
-    // const { countries } = this.state;
-    setCountries([...countries].filter(c => c.id !== countryId));
+
+  const handleDelete = async(countryId) => {
+    await axios.delete(` ${apiEndpoint}/${countryId}`);
+    setCountries(countries.filter(c => c.id !== countryId));
   }
   const handleIncrement = (countryId, medalName) => {
     const idx = countries.findIndex(c => c.id === countryId);
