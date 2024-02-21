@@ -23,16 +23,32 @@ const App = () => {
 
   // this is the functional equivalent to componentDidMount
   useEffect(() => {
-    async function fetchData() {
+    async function fetchCountries() {
       const { data: fetchedCountries } = await axios.get(apiEndpoint);
-      setCountries(fetchedCountries);
+        // we need to save the original medal count values in state
+        let newCountries = [];
+        fetchedCountries.forEach(country => {
+          let newCountry = {
+            id: country.id,
+            name: country.name,
+          };
+          medals.current.forEach(medal => {
+            const count = country[medal.name];
+            // page_value is what is displayed on the web page
+            // saved_value is what is saved to the database
+            newCountry[medal.name] = { page_value: count, saved_value: count };
+          });
+          newCountries.push(newCountry);
+        });
+        setCountries(newCountries);
     }
-    fetchData();
+    fetchCountries();
   }, []);
 
   const handleAdd = async(name) => {
-    const {data: post} = await axios.post(apiEndpoint, {name: name, gold: 0, silver: 0, bronze: 0});
-    setCountries(countries.concat(post));
+    // const { data: post } = await axios.post(apiEndpoint, { name: name });
+    // setCountries(countries.concat(post));
+    console.log('ADD');
   }
 
   const handleDelete = async(countryId) => {
@@ -40,20 +56,23 @@ const App = () => {
     setCountries(countries.filter(c => c.id !== countryId));
   }
   const handleIncrement = (countryId, medalName) => {
-    const idx = countries.findIndex(c => c.id === countryId);
-    const mutableCountries = [...countries ];
-    mutableCountries[idx][medalName] += 1;
-    setCountries(mutableCountries);
+    // const idx = countries.findIndex(c => c.id === countryId);
+    // const mutableCountries = [...countries ];
+    // mutableCountries[idx][medalName] += 1;
+    // setCountries(mutableCountries);
+    console.log('+');
   }
   const handleDecrement = (countryId, medalName) => {
-    const idx = countries.findIndex(c => c.id === countryId);
-    const mutableCountries = [...countries ];
-    mutableCountries[idx][medalName] -= 1;
-    setCountries(mutableCountries);
+    // const idx = countries.findIndex(c => c.id === countryId);
+    // const mutableCountries = [...countries ];
+    // mutableCountries[idx][medalName] -= 1;
+    // setCountries(mutableCountries);
+    console.log('-');
   }
   const getAllMedalsTotal = () => {
     let sum = 0;
-    medals.current.forEach(medal => { sum += countries.reduce((a, b) => a + b[medal.name], 0); });
+    // use medal count displayed in the web page for medal count totals
+    medals.current.forEach(medal => { sum += countries.reduce((a, b) => a + b[medal.name].page_value, 0); });
     return sum;
   }
    
