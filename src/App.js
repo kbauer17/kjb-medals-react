@@ -59,11 +59,18 @@ const App = () => {
     });
     setCountries(countries.concat(newCountry));
   }
-
+  const handleSave = (countryId) => {
+    console.log(`Save: ${countryId}`);
+  }
+  const handleReset = (countryId) => {
+    console.log(`Reset: ${countryId}`);
+  }
   const handleDelete = async(countryId) => {
     await axios.delete(` ${apiEndpoint}/${countryId}`);
     setCountries(countries.filter(c => c.id !== countryId));
   }
+
+
   const handleIncrement = (countryId, medalName) => handleUpdate(countryId, medalName, 1);
   const handleDecrement = (countryId, medalName) => handleUpdate(countryId, medalName, -1);
   const handleUpdate = (countryId, medalName, factor) => {
@@ -98,6 +105,8 @@ const App = () => {
               country={ country } 
               medals={ medals.current }
               onDelete={ handleDelete }
+              onSave={ handleSave }
+              onReset={ handleReset }
               onIncrement={ handleIncrement } 
               onDecrement={ handleDecrement } />
           </Col>
