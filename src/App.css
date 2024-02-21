@@ -15,3 +15,8 @@
 .card {
     width: 22rem;
 }
+
+.delta {
+    color: red;
+    font-style: italic;
+}
