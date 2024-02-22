@@ -40,8 +40,8 @@ const Country = (props) => {
               { renderSaveButton() ?
                 <React.Fragment>
                   {/* TODO: use Bootstrap stying / icons */}
-                  <button onClick={ () => onSave(country.id) }>save</button>
-                  <button onClick={ () => onReset(country.id) }>reset</button>
+                  <i class="bi bi-save2" onClick={ () => onSave(country.id) }></i>
+                  <i class="bi bi-x-square" onClick={ () => onReset(country.id) }></i>
                 </React.Fragment>
                 :
                 <TrashFill onClick={() => onDelete(country.id)} className='icon-btn' style={{ color:'red' }} />
