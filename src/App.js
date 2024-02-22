@@ -89,14 +89,21 @@ const App = () => {
     }
   }
   const handleReset = (countryId) => {
-    console.log(`Reset: ${countryId}`);
+    // to reset, make page value the same as the saved value
+    const idx = countries.findIndex(c => c.id === countryId);
+    const mutableCountries = [ ...countries ];
+    const country = mutableCountries[idx];
+    medals.current.forEach(medal => {
+      country[medal.name].page_value = country[medal.name].saved_value;
+    });
+    setCountries(mutableCountries);
   }
+
   const handleDelete = async(countryId) => {
     await axios.delete(` ${apiEndpoint}/${countryId}`);
     setCountries(countries.filter(c => c.id !== countryId));
   }
-
-
+  
   const handleIncrement = (countryId, medalName) => handleUpdate(countryId, medalName, 1);
   const handleDecrement = (countryId, medalName) => handleUpdate(countryId, medalName, -1);
   const handleUpdate = (countryId, medalName, factor) => {
