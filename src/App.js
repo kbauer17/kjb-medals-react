@@ -3,6 +3,7 @@
 // Version:     4.xx
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { HubConnectionBuilder } from '@microsoft/signalr';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
 import Container from 'react-bootstrap/Container';
@@ -14,7 +15,9 @@ import './App.css';
 
 const App = () => {
   const [countries, setCountries] = useState([]);
+  const [ connection, setConnection] = useState(null);
   const apiEndpoint = "https://medals-api-kjb.azurewebsites.net/api/country";
+  const hubEndpoint = "https://medals-api-kjb.azurewebsites.net/medalsHub"
   const medals = useRef([
     { id: 1, name: 'gold' },
     { id: 2, name: 'silver' },
@@ -43,6 +46,14 @@ const App = () => {
         setCountries(newCountries);
     }
     fetchCountries();
+    
+    // signalR
+    const newConnection = new HubConnectionBuilder()
+      .withUrl(hubEndpoint)
+      .withAutomaticReconnect()
+      .build();
+
+    setConnection(newConnection);
   }, []);
 
   const handleAdd = async(name) => {
