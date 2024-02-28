@@ -17,7 +17,7 @@ const App = () => {
   const [countries, setCountries] = useState([]);
   const [ connection, setConnection] = useState(null);
   const apiEndpoint = "https://medals-api-kjb.azurewebsites.net/api/country";
-  const hubEndpoint = "https://medals-api-kjb.azurewebsites.net/medalsHub"
+  const hubEndpoint = "https://medals-api-kjb.azurewebsites.net/medalsHub";
   const medals = useRef([
     { id: 1, name: 'gold' },
     { id: 2, name: 'silver' },
