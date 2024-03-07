@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/kjb-medals-react/static/css/main.c6be0fc2.css",
-    "main.js": "/kjb-medals-react/static/js/main.69b662f9.js",
+    "main.js": "/kjb-medals-react/static/js/main.b5bca024.js",
     "static/js/592.ab0553fc.chunk.js": "/kjb-medals-react/static/js/592.ab0553fc.chunk.js",
     "index.html": "/kjb-medals-react/index.html",
     "main.c6be0fc2.css.map": "/kjb-medals-react/static/css/main.c6be0fc2.css.map",
-    "main.69b662f9.js.map": "/kjb-medals-react/static/js/main.69b662f9.js.map",
+    "main.b5bca024.js.map": "/kjb-medals-react/static/js/main.b5bca024.js.map",
     "592.ab0553fc.chunk.js.map": "/kjb-medals-react/static/js/592.ab0553fc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c6be0fc2.css",
-    "static/js/main.69b662f9.js"
+    "static/js/main.b5bca024.js"
   ]
 }
