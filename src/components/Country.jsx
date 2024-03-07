@@ -13,7 +13,7 @@ const Country = (props) => {
     return sum;
   }
   
-  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset } = props;
+  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete } = props;
 
   const renderSaveButton = () => {
     let unsaved = false;
@@ -39,12 +39,11 @@ const Country = (props) => {
               otherewise, the delete country button will be rendered */}
               { renderSaveButton() ?
                 <React.Fragment>
-                  {/* TODO: use Bootstrap stying / icons */}
                   <i class="bi bi-save2" onClick={ () => onSave(country.id) }></i>
                   <i class="bi bi-x-square" onClick={ () => onReset(country.id) }></i>
                 </React.Fragment>
                 :
-                <TrashFill onClick={() => onDelete(country.id)} className='icon-btn' style={{ color:'red' }} />
+                canDelete && <TrashFill onClick={() => onDelete(country.id)} className='icon-btn' style={{ color:'red' }} />
               }
             </Card.Title>
             <ListGroup variant="flush">
