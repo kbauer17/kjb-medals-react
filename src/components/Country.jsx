@@ -13,7 +13,7 @@ const Country = (props) => {
     return sum;
   }
   
-  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete } = props;
+  const { country, medals, onIncrement, onDecrement, onDelete, onSave, onReset, canDelete, canPatch } = props;
 
   const renderSaveButton = () => {
     let unsaved = false;
@@ -51,7 +51,8 @@ const Country = (props) => {
           <ListGroup.Item className="d-flex justify-content-between" key={ medal.id }>
             <Medal  
               country={ country } 
-              medal={ medal } 
+              medal={ medal }
+              canPatch={ canPatch } 
               onIncrement={ onIncrement } 
               onDecrement={ onDecrement } />
           </ListGroup.Item>
