@@ -64,6 +64,12 @@ const App = () => {
         setCountries(newCountries);
     }
     fetchCountries();
+
+    // persistent user
+    const encodedJwt = localStorage.getItem("token");
+    // check for existing token
+    encodedJwt && setUser(getUser(encodedJwt));
+
     
     // signalR
     const newConnection = new HubConnectionBuilder()
