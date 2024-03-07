@@ -171,9 +171,26 @@ const App = () => {
     setCountries(mutableCountries);
   }
 
-  const handleDelete = async(countryId) => {
-    await axios.delete(` ${apiEndpoint}/${countryId}`);
+  const handleDelete = async (countryId) => {
+    const originalCountries = countries;
     setCountries(countries.filter(c => c.id !== countryId));
+    try {
+      await axios.delete(`${apiEndpoint}/${countryId}`);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        // country already deleted
+        console.log("The record does not exist - it may have already been deleted");
+      } else { 
+        setCountries(originalCountries);
+        if (ex.response && (ex.response.status === 401 || ex.response.status === 403)) {
+          alert("You are not authorized to complete this request");
+        } else if (ex.response) {
+          console.log(ex.response);
+        } else {
+          console.log("Request failed");
+        }
+      }
+    }
   }
   
   const handleIncrement = (countryId, medalName) => handleUpdate(countryId, medalName, 1);
