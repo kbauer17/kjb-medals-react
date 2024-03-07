@@ -6,6 +6,7 @@ import axios from 'axios';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
+import Login from './components/Login';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -61,7 +62,7 @@ const App = () => {
     setConnection(newConnection);
   }, []);
 
-    // componentDidUpdate (changes to connection)
+// componentDidUpdate (changes to connection)
     useEffect(() => {
       if (connection) {
         connection.start()
@@ -202,6 +203,9 @@ const App = () => {
     mutableCountries[idx][medalName].page_value += (1 * factor);
     setCountries(mutableCountries);
   }
+  const handleLogin = (username, password) => {
+    console.log(`username: ${username}, password: ${password}`);
+  }
   const getAllMedalsTotal = () => {
     let sum = 0;
     // use medal count displayed in the web page for medal count totals
@@ -218,6 +222,7 @@ const App = () => {
               <Badge className="ms-2" bg="light" text="dark" pill>{ getAllMedalsTotal()}</Badge>
             </Navbar.Brand>
             <Nav className="flex-end">
+              <Login onLogin={ handleLogin } />
               <NewCountry onAdd={ handleAdd } />
             </Nav>
           </Container>
